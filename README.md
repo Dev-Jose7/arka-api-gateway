@@ -24,4 +24,4 @@ El gateway se registra automáticamente en el Eureka Server, lo que le permite d
 🧪 Estado del proyecto
 Este microservicio se encuentra en una fase inicial de desarrollo. Aún pueden realizarse cambios importantes en la arquitectura y configuración.
 
-📌 Versión actual: v0.1.0
+📌 Versión actual: v0.2.0
