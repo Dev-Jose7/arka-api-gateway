@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.arka'
-version = '0.2.0-ALPHA'
+version = '1.0.0-STABLE'
 description = "Gateway service for routing and securing microservice requests in Arka's hardware distribution platform."
 
 java {
