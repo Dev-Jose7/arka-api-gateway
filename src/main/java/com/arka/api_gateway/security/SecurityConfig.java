@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.config.web.server.ServerHttpSecurity.CsrfSpec;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 
 @Configuration
@@ -23,18 +22,18 @@ public class SecurityConfig {
         AuthenticationWebFilter authenticationWebFilter = new AuthenticationWebFilter(authenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(new JwtAuthenticationConverter(jwtService));
 
-        http
-                .csrf(CsrfSpec::disable)
-                .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-                .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/v1/users/**").hasAnyRole("USER", "ADMIN")
-                        .pathMatchers("/api/v1/orders/**").authenticated()
-                        .pathMatchers("/api/v1/products/**").authenticated()
-                        .pathMatchers("/api/v1/notifications/**").permitAll()
+        return http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/api/v1/auth/**").permitAll()
+                        .pathMatchers("/api/v1/users/**").hasAnyRole("USER", "ADMIN")
+                        .pathMatchers("/api/v1/products/**").authenticated()
+                        .pathMatchers("/api/v1/orders/**").authenticated()
+                        .pathMatchers("/api/v1/notifications/**").permitAll()
                         .anyExchange().denyAll()
-                );
-
-        return http.build();
+                )
+                .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .build();
     }
 }
