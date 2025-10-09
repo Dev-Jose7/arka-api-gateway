@@ -4,22 +4,3 @@ spring:
 
   config:
     import: optional:configserver:http://${CONFIG_USERNAME}:${CONFIG_PASSWORD}@${CONFIG_URI}
-
-## Se registra Eureka Client y Spring Security localmente ya que se inician antes que Config Server
-## haya resuelto la configuración de ambos, haciendo que las credenciales de Eureka Server y
-## Spring Security no esten disponibles al momento de usarlas.
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${EUREKA_USERNAME}:${EUREKA_PASSWORD}@${EUREKA_URI}
-    register-with-eureka: true
-    fetch-registry: true
-
-security:
-  jwt:
-    key: ${JWT_KEY}
-    user: ${JWT_USER}
-
-logging:
-  level:
-    org.springframework.cloud.config: DEBUG
