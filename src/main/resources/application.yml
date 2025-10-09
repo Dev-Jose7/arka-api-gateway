@@ -3,4 +3,4 @@ spring:
     name: api-gateway
 
   config:
-    import: optional:configserver:${CONFIG_URI}
+    import: optional:configserver:http://${CONFIG_USERNAME}:${CONFIG_PASSWORD}@${CONFIG_URI}
